@@ -1,34 +1,34 @@
 class Solution {
     public void sortColors(int[] nums) {
-        quickSort(nums, 0, nums.length - 1);
+        int low = 0;
+        int high = nums.length - 1;
+        cycle(nums, low, high);
     }
 
-    private void quickSort(int[] nums, int low, int high) {
-        if (low < high) {
-            int pivotIndex = partition(nums, low, high);
-            quickSort(nums, low, pivotIndex - 1);
-            quickSort(nums, pivotIndex + 1, high);
+    public void cycle(int[] nums, int low, int high) {
+        if (low >= high) {
+            return; // Termination condition for recursion
         }
-    }
-
-    private int partition(int[] nums, int low, int high) {
         int pivot = nums[high];
-        int i = low - 1;
+        int s = low;
+        int e = high;
 
-        for (int j = low; j < high; j++) {
-            if (nums[j] < pivot) {
-                i++;
-                int temp = nums[i];
-                nums[i] = nums[j];
-                nums[j] = temp;
+        while (s <= e) {
+            if (nums[s] >= pivot && nums[e] <= pivot) {
+                int temp = nums[s];
+                nums[s] = nums[e];
+                nums[e] = temp;
+                s++;
+                e--;
+            } else if (nums[s] >= pivot) {
+                e--;
+            } else {
+                s++;
             }
         }
 
-        int temp = nums[i + 1];
-        nums[i + 1] = nums[high];
-        nums[high] = temp;
-
-        return i + 1;
+        cycle(nums, low, e);
+        cycle(nums, s, high);
     }
 }
 
