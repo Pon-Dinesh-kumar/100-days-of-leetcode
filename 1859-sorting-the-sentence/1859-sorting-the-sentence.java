@@ -16,7 +16,7 @@ class Solution {
 
         str.setLength(0);
         for(int i=48; i<=57; i++){
-            if(arr[i] != null && !arr[i].isEmpty()){
+            if(arr[i] != null){
                 str.insert(str.length(),arr[i]);
                 str.append(' ');
             }
